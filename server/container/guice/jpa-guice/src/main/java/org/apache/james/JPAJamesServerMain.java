@@ -44,7 +44,7 @@ import org.apache.james.modules.server.WebAdminServerModule;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-public class JPAJamesServerMain {
+public class JPAJamesServerMain implements JamesServerMain {
 
     public static final Module webadmin = Modules.combine(
         new WebAdminServerModule(),
@@ -77,7 +77,8 @@ public class JPAJamesServerMain {
                     .combineWith(jpaServerModule, protocols, 
                             new JMXServerModule(), 
                             new LuceneSearchMailboxModule());
-        server.start();
+
+        JamesServerMain.startJamesDaemon(server);
     }
 
 }

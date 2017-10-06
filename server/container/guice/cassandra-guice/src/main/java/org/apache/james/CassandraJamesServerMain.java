@@ -49,7 +49,7 @@ import org.apache.james.modules.server.WebAdminServerModule;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-public class CassandraJamesServerMain {
+public class CassandraJamesServerMain implements JamesServerMain {
 
     public static final Module webadmin = Modules.combine(
         new CassandraRoutesModule(),
@@ -86,7 +86,8 @@ public class CassandraJamesServerMain {
     public static void main(String[] args) throws Exception {
         GuiceJamesServer server = new GuiceJamesServer()
                     .combineWith(cassandraServerModule, protocols, new JMXServerModule());
-        server.start();
+
+        JamesServerMain.startJamesDaemon(server);
     }
 
 }

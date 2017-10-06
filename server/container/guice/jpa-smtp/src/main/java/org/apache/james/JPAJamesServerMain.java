@@ -36,7 +36,7 @@ import org.apache.openjpa.persistence.OpenJPAPersistence;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-public class JPAJamesServerMain {
+public class JPAJamesServerMain implements JamesServerMain {
 
     public static final Module protocols = Modules.combine(
         new ProtocolHandlerModule(),
@@ -56,7 +56,8 @@ public class JPAJamesServerMain {
     public static void main(String[] args) throws Exception {
         GuiceJamesServer server = new GuiceJamesServer()
                     .combineWith(jpaServerModule, protocols);
-        server.start();
+
+        JamesServerMain.startJamesDaemon(server);
     }
 
 }

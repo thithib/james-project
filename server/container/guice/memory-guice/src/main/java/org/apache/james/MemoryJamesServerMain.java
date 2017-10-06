@@ -40,7 +40,7 @@ import org.apache.james.modules.server.WebAdminServerModule;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-public class MemoryJamesServerMain {
+public class MemoryJamesServerMain implements JamesServerMain {
 
     public static final Module webadmin = Modules.combine(
             new WebAdminServerModule(),
@@ -67,9 +67,9 @@ public class MemoryJamesServerMain {
             protocols);
 
     public static void main(String[] args) throws Exception {
-        new GuiceJamesServer()
-            .combineWith(inMemoryServerModule, new JMXServerModule())
-            .start();
+        GuiceJamesServer server = new GuiceJamesServer()
+            .combineWith(inMemoryServerModule, new JMXServerModule());
+        JamesServerMain.startJamesDaemon(server);
     }
 
 }
